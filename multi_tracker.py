@@ -93,6 +93,7 @@ class Multi_tracker(object):
                     for j in range(1, split + 1):
                         split_range[j] += split_range[j - 1]
                     for j in range(split):
+                        gmp = np.mean(crop_feature, axis=1)
                         split_lmp.append(np.max(gmp[:, split_range[j]:split_range[j + 1]], axis=1))
                     crop_features[classids[i]].append(np.concatenate(split_lmp))
 
@@ -103,7 +104,8 @@ class Multi_tracker(object):
                     for j in range(1, split + 1):
                         split_range[j] += split_range[j - 1]
                     for j in range(split):
-                        split_lap.append(np.max(gmp[:, split_range[j]:split_range[j + 1]], axis=1))
+                        gap = np.mean(crop_feature, axis=1)
+                        split_lap.append(np.max(gap[:, split_range[j]:split_range[j + 1]], axis=1))
                     crop_features[classids[i]].append(np.concatenate(split_lap))
 
         # deep sort
