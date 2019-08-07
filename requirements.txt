@@ -1,0 +1,6 @@
+numpy
+scipy
+sklearn
+opencv-python>=4.1.0
+tensorflow>=1.4
+argparse
