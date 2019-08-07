@@ -9,9 +9,9 @@ Different from original method in Deepsort. I did some improvement.
 
     1.2 : global max pooling<div>
 
-    1.3 : Part-based average pooling<div>
+    1.3 : Part-based local average pooling<div>
 
-    1.4 : Part-based max pooling<div>
+    1.4 : Part-based local max pooling<div>
 
 
 2. Extend the method from only tracking poeple to all the objects that the detector detected.
