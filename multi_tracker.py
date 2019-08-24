@@ -41,10 +41,10 @@ class Multi_tracker(object):
         crop_features = [[] for i in range(len(self.labels))]
 
         level_3 = feature_maps[2][0]  # [256x(X/8)x(Y/8)]
-        x_boundary = level_3.shape[2]
         y_boundary = level_3.shape[1]
-        x_pool_ratio = (image.shape[1] / x_boundary) * 8
-        y_pool_ratio = (image.shape[0] / y_boundary) * 8
+        x_boundary = level_3.shape[2]
+        x_pool_ratio = (image.shape[1] / x_boundary)
+        y_pool_ratio = (image.shape[0] / y_boundary)
 
         g_classids = [[] for i in range(len(self.labels))]
         g_confidences = [[] for i in range(len(self.labels))]
@@ -72,25 +72,25 @@ class Multi_tracker(object):
                 g_confidences[classids[i]].append(confidences[i])
                 g_boxes[classids[i]].append(boxes[i])
 
-                crop_feature = level_3[:, x1:x2, y1:y2]
+                crop_feature = level_3[:, y1:y2, x1:x2]
 
                 # global max pooling
                 # np.max on x then y
                 if self.tracker_type == "global_max_pooling":
-                    gmp = np.max(crop_feature, axis=1)
+                    gmp = np.max(crop_feature, axis=2)
                     crop_features[classids[i]].append(np.max(gmp, axis=1))
 
                 # global average pooling
                 # np.mean on x then y
                 elif self.tracker_type == "global_avg_pooling":
-                    gap = np.mean(crop_feature, axis=1)
+                    gap = np.mean(crop_feature, axis=2)
                     crop_features[classids[i]].append(np.mean(gap, axis=1))
 
                 # local max pooling
                 elif self.tracker_type == "local_max_pooling":
                     split_lmp = []
                     split_range = splitInteger(abs(y2 - y1), split)  # split height into size of self.split
-                    gmp = np.max(crop_feature, axis=1)
+                    gmp = np.max(crop_feature, axis=2)
                     for j in range(1, split + 1):
                         split_range[j] += split_range[j - 1]
                     for j in range(split):
@@ -101,7 +101,7 @@ class Multi_tracker(object):
                 if self.tracker_type == "local_avg_pooling":
                     split_lap = []
                     split_range = splitInteger(abs(y2 - y1), split)  # split height into size of self.split
-                    gap = np.mean(crop_feature, axis=1)
+                    gap = np.mean(crop_feature, axis=2)
                     for j in range(1, split + 1):
                         split_range[j] += split_range[j - 1]
                     for j in range(split):
