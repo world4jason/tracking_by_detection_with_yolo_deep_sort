@@ -24,7 +24,7 @@ Videos demo on Cityscapes (record at 1 fps)
 # Installation
 1. Clone the repository:
 ````
-git clone https://github.com/world4jason/tracking_by_detection
+git clone https://github.com/world4jason/tracking_by_detection_with_yolo_deep_sort
 ````
 2. Download pre-generated detections and the CNN checkpoint file from [here](https://drive.google.com/open?id=18fKzfqnqhqW3s9zwsCbnVJ5XF2JFeqMp) and the netowrk folder under model_data
 
